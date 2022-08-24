@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { CartComponent } from './components/cart/cart.component';
 import { CarimageaddComponent } from './components/carimageadd/carimageadd.component';
 import { ColorFilterPipePipe } from './pipes/color-filter-pipe.pipe';
+import { FilterComponent } from './components/filter/filter.component';
 
 
 
@@ -41,7 +42,8 @@ import { ColorFilterPipePipe } from './pipes/color-filter-pipe.pipe';
     BrandAddComponent,
     CartComponent,
     CarimageaddComponent,
-    ColorFilterPipePipe
+    ColorFilterPipePipe,
+    FilterComponent
 
 
     

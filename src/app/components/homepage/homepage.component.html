@@ -2,22 +2,19 @@
 <div class="row bg-light"> 
 
   <div class="row">
-    <div class="mb-3 col-md-4">
+    <div class="mb-3 col-md-12">
       <label for="filterText" class="form-label"></label>
-      <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="Search By Brand">
+      <input type="text" [(ngModel)]="filterText" class="form-control text-center bg-light text-dark" id="filterText" placeholder="Search By Color or Brand">
     </div>
 
-    <div class="mb-3 col-md-4">
-      <label for="filterText2" class="form-label"></label>
-      <input type="text" [(ngModel)]="filterText2" class="form-control" id="filterText2" placeholder="Search By Color">
-    </div>
+    
 
   </div>
   
   <div class="alert alert-primary" *ngIf="filterText || filterText2">
     {{filterText || filterText2}} searched
   </div>
-        <div *ngFor="let carDetail of carDetails |filterPipe:filterText2" class="card mx-3 mb-3 mt-3" style="width: 18rem;">
+        <div *ngFor="let carDetail of carDetails |filterPipe:filterText" class="card mx-3 mb-3 mt-3" style="width: 18rem;">
           
             <img class="card-img-top" src="https://localhost:7252/uploads/images/{{getCarImage(carDetail)}}" alt="Card image cap">
             <div class="card-body">

@@ -23,40 +23,26 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
-      if(params["colorId"]){
-        this.getCarsDetailsFilterColor()
+      if(params["colorId"] && params["brandId"]){
+        this.getCarsByColorAndBrandId(params["colorId"],params["brandId"]);
+      }
+      else if(params["colorId"]){
+        this.getCarsByColor(params["colorId"])
       }else if(params["brandId"]){
-        this.getCarsDetailsFilterBrand()
-      }else{
+        this.getCarsByBrand(params["brandId"])
+      }
+      else{
         this.getCarsDetails()
       }
+
+      
     })
  
   }
 
-  getCarsDetailsFilterColor(){
-    this.activatedRoute.params.subscribe(params=>{
-      if(params["colorId"]){
-         this.getCarsByColor(params["colorId"])
-      }else if(params["brandId"]){
-        this.getCarsByBrand(params["brandId"])
-      }else if(params["colorId"]&&params["brandId"]){
-        this.getCarsByColorAndBrand(params["colorId"],params["brandId"])
-      }else{
-        this.getCarsDetails()
-      }
-    })
-  }
+  
 
-  getCarsDetailsFilterBrand(){
-    this.activatedRoute.params.subscribe(params=>{
-      if(params["brandId"]){
-         this.getCarsByBrand(params["brandId"])
-      }else{
-        this.getCarsDetails()
-      }
-    })
-  }
+
 
   getCarsDetails(){
     this.carDetailService.getCarsDetails().subscribe(response=>{
@@ -90,9 +76,10 @@ export class HomepageComponent implements OnInit {
     })
   }
 
-  getCarsByColorAndBrand(colorId:number,brandId:number){
-    this.getCarsByColor(colorId);
-    this.carDetails = this.carDetails.filter(b=>b.brandId==brandId);
+  getCarsByColorAndBrandId(colorId:number,brandId:number){
+    this.carDetailService.getCarsByColorAndBrandId(colorId,brandId).subscribe(response=>{
+      this.carDetails = response.data
+    })
   }
 
   addToCart(carDetail:CarDetail){
@@ -104,14 +91,14 @@ export class HomepageComponent implements OnInit {
 
 
   getFilterText(){
-    if(this.filterText2==="" && this.filterText!==""){
+    if(this.filterText2=="" && this.filterText!=""){
       return this.filterText;
     }
     return this.filterText2;
   }
 
   alreadyAdded(carDetail:CarDetail){
-    var result = this.cartService.list().filter((c:CartItem)=>c.carDetail.carId === carDetail.carId);
+    var result = this.cartService.list().filter((c:CartItem)=>c.carDetail.carId == carDetail.carId);
     if(result.length>0){
       return false;
     }else{
@@ -122,5 +109,7 @@ export class HomepageComponent implements OnInit {
   alreadyAddedMessage(){
     this.toastrService.info("Car Already Added");
   }
+
+
 
 }
