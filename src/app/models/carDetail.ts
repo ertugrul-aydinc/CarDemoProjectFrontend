@@ -8,4 +8,5 @@ export interface CarDetail{
     brandName:string;
     imagePath:string;
     isRentable:boolean;
+    modelYear:number;
 }

@@ -1,0 +1,46 @@
+<div class="row">
+
+    <div class="col-md-9">
+      <div *ngFor="let cartItem of cartItems">
+        <div class="card mb-3" style="max-width: 540px;">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img  src="https://localhost:7252/uploads/images/{{getCarImage(cartItem.carDetail)}}" class="img-fluid rounded-start" alt="...">
+              <button type="button" class="btn-fill mt-2" (click)="deleteFromCart(cartItem)">Delete</button>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{cartItem.carDetail.brandName}}</h5>
+                <p class="card-text">{{cartItem.carDetail.colorName}}</p>
+                <p class="card-text">{{cartItem.carDetail.modelYear}} Model --- {{cartItem.carDetail.description}} Motor</p>
+                
+                <span>Rent Date: <input type="date" id="date" [(ngModel)]="dateSelected"><br>Return Date: <input type="date" id="date2" [(ngModel)]="dateSelected2"></span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+  </div>
+
+  <div class="col-md-3">
+    <div class="card" style="width: 18rem;">
+      <div *ngIf="cartItems.length>0" class="card-header text-center font-monospace">
+        Cart Summary
+      </div>
+      <ul class="list-group list-group-flush">
+        <div *ngFor="let cartItem of cartItems">
+          <li *ngIf="dateSelected&&dateSelected2; else oneCar" class="list-group-item bg-dark text-white">{{dateMinus()}} Day <br>Total Price: {{dateMinus()*cartItem.carDetail.dailyPrice |currency}}</li>
+          <ng-template #oneCar>
+            <li class="list-group-item bg-dark text-white">1 Day <br>Total Price: {{cartItem.carDetail.dailyPrice |currency}}</li>
+          </ng-template>
+        </div>
+      </ul>
+      <button *ngIf="cartItems.length>0" type="button" class="btn btn-success" (click)="getTotalPrice()">Confirm Cart</button>
+    </div>
+  </div>
+  
+</div>
+

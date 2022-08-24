@@ -16,6 +16,14 @@ export class ColorComponent implements OnInit {
 
   currentColor:Color;
 
+  selectedColor:number;
+  
+  currentColorId:number=1;
+
+  exampleColor:number=0;
+  
+
+
   
 
   constructor(private colorService:ColorService) { }
@@ -30,8 +38,15 @@ export class ColorComponent implements OnInit {
     })
   }
 
+  show(colorId:number){
+    this.currentColorId=colorId;
+    this.exampleColor=colorId;
+    console.log(this.exampleColor);
+  }
+
   setCurrentColor(color:Color){
     this.currentColor = color;
+    this.currentColorId=color.id;
   }
 
   deleteCurrentColor(){
@@ -55,4 +70,5 @@ export class ColorComponent implements OnInit {
       return "list-group-item"
     }
   }
+
 }

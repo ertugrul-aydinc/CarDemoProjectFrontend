@@ -1,0 +1,32 @@
+<div class="content">
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="Title">Add Car Image</h5>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="carImageAddForm">
+                    <label for="carId">Car Id</label>
+                    <div class="form-group mb-3">
+                        <input type="text"
+                        id="carId" 
+                        formControlName="carId" 
+                        class="form-control" 
+                        placeholder="Car Id">
+                    </div>
+                    <label for="imageFile">Image File</label>
+                    <div class="form-group mb-3">
+                        <input type="file"
+                        id="imageFile" 
+                        formControlName="imageFile" 
+                        class="form-control" 
+                        placeholder="Choose File">
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-fill btn-primary" (click)="add()">Add</button>
+            </div>
+        </div>    
+    </div>
+</div>

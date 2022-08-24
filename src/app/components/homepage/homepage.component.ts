@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CarDetail } from 'src/app/models/carDetail';
+import { CartItem } from 'src/app/models/cartItem';
 import { CarDetailService } from 'src/app/services/car-detail.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-homepage',
@@ -11,8 +14,12 @@ import { CarDetailService } from 'src/app/services/car-detail.service';
 export class HomepageComponent implements OnInit {
 
   carDetails:CarDetail[]=[]
+  filterText="";
+  filterText2="";
+  
 
-  constructor(private carDetailService:CarDetailService, private activatedRoute:ActivatedRoute) { }
+  constructor(private carDetailService:CarDetailService, private activatedRoute:ActivatedRoute, private toastrService:ToastrService,
+    private cartService:CartService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
@@ -24,6 +31,7 @@ export class HomepageComponent implements OnInit {
         this.getCarsDetails()
       }
     })
+ 
   }
 
   getCarsDetailsFilterColor(){
@@ -85,6 +93,34 @@ export class HomepageComponent implements OnInit {
   getCarsByColorAndBrand(colorId:number,brandId:number){
     this.getCarsByColor(colorId);
     this.carDetails = this.carDetails.filter(b=>b.brandId==brandId);
+  }
+
+  addToCart(carDetail:CarDetail){
+    this.cartService.addToCart(carDetail);
+    this.toastrService.success("Added to Cart");
+  }
+
+  
+
+
+  getFilterText(){
+    if(this.filterText2==="" && this.filterText!==""){
+      return this.filterText;
+    }
+    return this.filterText2;
+  }
+
+  alreadyAdded(carDetail:CarDetail){
+    var result = this.cartService.list().filter((c:CartItem)=>c.carDetail.carId === carDetail.carId);
+    if(result.length>0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  alreadyAddedMessage(){
+    this.toastrService.info("Car Already Added");
   }
 
 }

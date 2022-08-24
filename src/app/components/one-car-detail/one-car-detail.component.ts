@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CarDetail } from 'src/app/models/carDetail';
 import { CarImage } from 'src/app/models/carImage';
 import { CarDetailService } from 'src/app/services/car-detail.service';
+import { CartService } from 'src/app/services/cart.service';
 import { OneCarDetailService } from 'src/app/services/one-car-detail.service';
 
 @Component({
@@ -18,7 +20,8 @@ export class OneCarDetailComponent implements OnInit {
   
 
 
-  constructor(private oneCarDetailService:OneCarDetailService, private activatedRoute:ActivatedRoute, private carDetailService:CarDetailService) { }
+  constructor(private oneCarDetailService:OneCarDetailService, private activatedRoute:ActivatedRoute, private carDetailService:CarDetailService,
+    private toastrService:ToastrService, private cartService:CartService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
@@ -51,6 +54,12 @@ export class OneCarDetailComponent implements OnInit {
     })
   }
 
+  
 
+
+  addToCart(carDetail:CarDetail){
+    this.cartService.addToCart(carDetail);
+    this.toastrService.success("Added to Cart");
+  }
 
 }
